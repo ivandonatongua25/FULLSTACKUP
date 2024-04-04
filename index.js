@@ -92,7 +92,7 @@ app.use(express.json());
 
 
 app.get("/", (req, res) => {
-  //res.send("Hola estoy funcionando.");
+ 
   res.status(200).json("Hola estoy funcionando.");
 });
 
@@ -108,8 +108,8 @@ app.get("/", (req, res) => {
 });*/
 
 // Get de todos los usuarios
-/*
-app.get("/users",Middleware.verify,async (req,res) =>{
+
+app.get("/users",/*Middleware.verify,*/async (req,res) =>{
 
   let limit = req.query.limit;
   let offset = req.query.offset;
@@ -232,7 +232,7 @@ app.post("/auth/login", async (req,res) => {
         res.status(500).send("Error");
     }  
 })
-*/
+
 /* Manda un mail */
 //MailController.sendMail();
 /*
