@@ -1,5 +1,5 @@
 require('mongoose');
-const Pelu = require('./models/peluche');
+const Pelu = require('../Models/peluche');
 
 
 const addPeluche = async (animal,nombre,color,accesorio) => {
