@@ -124,7 +124,7 @@ app.get("/", (req, res) => {
 
 // GET - POST - DELETE - PUT - PATCH 
 
-//MailController.sendMail();
+
 
 
 
@@ -365,12 +365,7 @@ app.delete("/peluches/:id", async(req,res) =>{
 
 
 
-
-
-
-
-
-
+MailController.sendMail();
 
 
 

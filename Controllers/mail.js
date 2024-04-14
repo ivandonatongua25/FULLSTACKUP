@@ -1,12 +1,14 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
+
 
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.APP_EMAIL,
-      pass: process.env.APP_EMAIL_PASS,
+      user: 'ivandonatongua@gmail.com',
+      pass: 'ontt gvhp qiqg hzwm'
     },
-    // No es lo mas correcto pero se evita error de ssl en local
+  
     tls: {
         rejectUnauthorized: false
     }
@@ -14,9 +16,9 @@ let transporter = nodemailer.createTransport({
   
   let mailOptions = {
     from: 'ivandonatongua@gmail.com',
-    to: "nguanzeng@gmail.com",
+    to: 'nguanzeng@gmail.com',
     subject: `Notificaciones de fullstack`,
-    html: `Estamos probando como enviar mails.`,
+    html: '<h2>Ivan Donato Hizo Esto</h2><br>'
   };
   
 const sendMail = () => {
@@ -26,6 +28,7 @@ const sendMail = () => {
         console.log(err)
     else
         console.log(info);
+      console.log("Ivan Tu Email Se envio Correctamente");
   });
 }
 
