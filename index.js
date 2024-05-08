@@ -65,7 +65,7 @@ const http = require("http").createServer(app);
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://ivandonato:ivandonato@cluster0.7t1koqn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://alumno:alumno@cluster0.9mzi5k6.mongodb.net/?retryWrites=true&w=majority";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -80,14 +80,13 @@ async function run() {
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Hola Ivan Donato Eres Bienvenido y conectado correctamente a mongodb !");
+    console.log("saludos de nuevo ivan!");
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
 run().catch(console.dir);
-
 
 
 
@@ -102,6 +101,8 @@ const MailController = require('./Controllers/mail');
 
 /***Controladores de Peluche */
 const PeluController = require('./Controllers/peluche');
+/***Controladores de Conejo */
+const ConeController = require('./Controllers/conejo');
 
 
 
@@ -254,15 +255,6 @@ app.post("/auth/login", async (req,res) => {
     }  
 })
 
-/* Manda un mail */
-//MailController.sendMail();
-/*
-http.listen(PORT, () => {
-  console.log(`Listening to ${PORT}`);
-});
-*/
-
-
 ///Las rutas de peluche
 
 // Get Info de un Peluche
@@ -273,9 +265,9 @@ app.get("/peluches/:id",async (req,res) =>{
 
   try{
 
-    pelu = await PeluController.getPeluche(userId);
+    pelu = await PeluController.getPeluche(pelucheId);
 
-    res.status(200).json(user);
+    res.status(200).json(pelu);
 
   }catch(error){
     res.status(500).send("Error");
@@ -310,7 +302,6 @@ app.post("/peluches",async (req,res) =>{
   let animal = req.body.animal;
   let nombre = req.body.nombre;
   let color = req.body.color;
-  
   let accesorio = req.body.accesorio;
   try{
     const result = await PeluController.addPeluche(animal,nombre,color,accesorio);
@@ -364,6 +355,110 @@ app.delete("/peluches/:id", async(req,res) =>{
 });
 
 
+
+
+///Las rutas del conejo
+
+// Get Info de un Conejo
+
+
+
+
+
+// Get de todos los Conejos
+
+app.get("/conejos",/*Middleware.verify,*/async (req,res) =>{
+
+  let limit = req.query.limit;
+  let offset = req.query.offset;
+
+  try{
+      const results = await ConeController.getAllConejos(limit,offset);
+      res.status(200).json(results);
+
+  }catch(error){
+      res.status(500).send("Error. Intente mÃ¡s tarde.")
+  }
+
+});
+
+
+// Creo un nuevo Conejo
+
+app.post("/conejos",async (req,res) =>{
+    
+  let animal = req.body.animal;
+  let nombre = req.body.nombre;
+  let color = req.body.color;
+
+  let accesorio = req.body.accesorio;
+  try{
+    const result = await ConeController.addConejo(animal,nombre,color,accesorio);
+    if(result){
+      res.status(201).send("Conejo creado correctamente"); // 201
+    }else{
+      res.status(409).send("El Conejo ya existe"); // 409
+    }  
+  }catch(error){
+    res.status(500).send("Error al crear Conejo."); //500
+  }  
+  
+});
+
+
+app.get("/conejos/:id",async (req,res) =>{
+
+  let conejoId =  req.params.id;
+
+  try{
+
+    cone = await ConeController.getConejo(conejoId);
+
+    res.status(200).json(cone);
+
+  }catch(error){
+    res.status(500).send("Error");
+  }
+
+});
+
+//editar conejo
+
+app.put("/conejos/:id",async (req,res) =>{
+
+  const conej = { _id: req.params.id, ...req.body };
+  //             {_id: req.params.id, name: req.body.name, lastname, email }
+  try{
+    
+    const result = await ConeController.editConejo(conej);
+    if(result){
+      res.status(200).json(result);
+    }else{
+      res.status(404).send("El Conejo no existe.");
+    }  
+  }catch(error){  
+    res.status(500).send("Error Algo salio mal");
+  } 
+
+});
+
+
+
+app.delete("/conejos/:id", async(req,res) =>{
+
+  try{
+
+    const result = await ConeController.deleteConejo(req.params.id);
+    if(result){
+      res.status(200).send("Conejo  borrado.")
+    }else{
+      res.status(404).send("No se ha podido eliminar el conejo.")
+    }  
+
+  }catch(error){
+    res.status(500).send("Error algo salio mal")
+  }
+});
 
 //MailController.sendMail();
 
