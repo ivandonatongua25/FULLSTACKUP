@@ -26,7 +26,6 @@ const pelucheSchema = new Schema({
     transform: (document, object) => {
         object.id = document.id;
         delete object._id;
-       
     }
 });
 
