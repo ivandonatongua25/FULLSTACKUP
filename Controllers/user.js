@@ -2,6 +2,7 @@ require('mongoose');
 const Usr = require("../Models/user");
 
 
+
 const addUser = async (name,lastname,email,isActive,password) => {
 
     let existUser = await Usr.findOne({ email: email });
@@ -69,5 +70,6 @@ const deleteUser = async(id) => {
 
     return result;
 }
+
 
 module.exports = { addUser, getAllUsers, getUser, editUser, editRoles, deleteUser }

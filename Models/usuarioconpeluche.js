@@ -1,8 +1,10 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const conejoSchema = new Schema({
+require('mongoose');
+const Pelu = require('../Models/peluche');
+const Usr = require("../Models/user");
 
-	
+const Schema = mongoose.Schema;
+const usrPeluSchema = new Schema({
+
     email:{
 		type: String,
 		required:true,
@@ -29,6 +31,7 @@ const conejoSchema = new Schema({
 		
 	},
 
+
 }, { timestamps: true } ).set('toJSON',{
     transform: (document, object) => {
         object.id = document.id;
@@ -36,7 +39,5 @@ const conejoSchema = new Schema({
     }
 });
 
-
-const  Cone= mongoose.model('cone',conejoSchema);
-module.exports = Cone;
-
+const UserPeluche = mongoose.Model('userpeluche',usrPeluSchema);
+module.exports = UserPeluche;

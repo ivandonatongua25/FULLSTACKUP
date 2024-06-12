@@ -27,7 +27,10 @@ const usrSchema = new Schema({
 	password:{
 		type: String,
 		required:true
-	}
+	},
+	peluche :{
+		type: mongoose.Types.ObjectId
+	} 
 	
 }, { timestamps: true } ).set('toJSON',{
     transform: (document, object) => {

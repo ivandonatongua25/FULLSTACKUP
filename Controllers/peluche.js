@@ -2,16 +2,17 @@ require('mongoose');
 const Pelu = require('../Models/peluche');
 
 
-const addPeluche = async (animal,nombre,color,accesorio) => {
 
-    let existPeluche = await Pelu.findOne({ nombre: nombre});
+const addPeluche = async (animal,name,color,accesorio) => {
+
+    let existPeluche = await Pelu.findOne({ name: name});
     console.log(existPeluche);
     if(!existPeluche) {
 
         const pelu = new Pelu(
             {              
                 animal: animal,
-                nombre:nombre,
+                name:name,
                 color: color,
                 accesorio:accesorio,
             
@@ -59,5 +60,38 @@ const deletePeluche = async(id) => {
 
     return result;
 }
+/*
+//------------ Relaciones entre Tablas -----------------//
+/*
+usuarioConPeluche =  async(req,res)=>{
+
+    const result = await Usr.aggregate(
+        [
+            {
+                $lookup:
+                    {
+                        from:"Pelu",
+                        localField:"Usr",
+                        foreignField : "_id",
+                        as : "usuarioPeluche"
+                    
+
+                    }
+                                   
+
+    
+            },{
+                "$unwind":"usuarioPeluche"
+            } 
+        ]
+    )
+    
+    
+    
+    
+    }
+
+
+*/
 
 module.exports = { addPeluche, getAllPeluches, getPeluche, editPeluche, deletePeluche }

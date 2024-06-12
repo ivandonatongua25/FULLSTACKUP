@@ -2,24 +2,27 @@ require('mongoose');
 const Cone = require('../Models/conejo');
 
 
-const addConejo = async (animal,nombre,color,accesorio) => {
+const addConejo = async (email,nombreAnimal,imgAnimal,imgAccesorio,color) => {
 
-    let existConejo = await Cone.findOne({ nombre: nombre});
+    let existConejo = await Cone.findOne({ email: email});
     console.log(existConejo);
     if(!existConejo) {
 
+
         const cone = new Cone(
             {              
-                animal: animal,
-                nombre:nombre,
-                color: color,
-                accesorio:accesorio,
+                email: email,
+                nombreAnimal:nombreAnimal,
+                imgAnimal:imgAnimal,
+                imgAccesorio:imgAccesorio,
+                color:color,
+        
             
             }
         );
 
         let conec = await cone.save(); 
-        console.log("Conejo nuevo");
+        console.log("usuario Con Peluche Registrado");
         console.log(conec);
         return { conec }; 
 

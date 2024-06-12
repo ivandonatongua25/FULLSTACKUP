@@ -86,9 +86,14 @@ async function run() {
     await client.close();
   }
 }
-run().catch(console.dir);
+run().catch(console.dir); 
 
 
+
+/**modelos para unir tablas */
+const Pelu = require("./Models/peluche")
+//const Pelu = require("../Models/peluche");
+const Usr = require("./Models/user");
 
 
 
@@ -300,11 +305,11 @@ app.get("/peluches",/*Middleware.verify,*/async (req,res) =>{
 app.post("/peluches",async (req,res) =>{
     
   let animal = req.body.animal;
-  let nombre = req.body.nombre;
+  let name = req.body.name;
   let color = req.body.color;
   let accesorio = req.body.accesorio;
   try{
-    const result = await PeluController.addPeluche(animal,nombre,color,accesorio);
+    const result = await PeluController.addPeluche(animal,name,color,accesorio);
     if(result){
       res.status(201).send("Peluche creado correctamente"); // 201
     }else{
@@ -387,20 +392,20 @@ app.get("/conejos",/*Middleware.verify,*/async (req,res) =>{
 
 app.post("/conejos",async (req,res) =>{
     
-  let animal = req.body.animal;
-  let nombre = req.body.nombre;
+  let email = req.body.email;
+  let nombreAnimal = req.body.nombreAnimal;
+  let imgAnimal = req.body.imgAnimal;
+  let imgAccesorio = req.body.imgAccesorio;
   let color = req.body.color;
-
-  let accesorio = req.body.accesorio;
   try{
-    const result = await ConeController.addConejo(animal,nombre,color,accesorio);
+    const result = await ConeController.addConejo(email,nombreAnimal,imgAnimal,imgAccesorio,color);
     if(result){
-      res.status(201).send("Conejo creado correctamente"); // 201
+      res.status(201).send("Usuario Con Animal Creado correctamente"); // 201
     }else{
-      res.status(409).send("El Conejo ya existe"); // 409
+      res.status(409).send("Usuario Con Animal ya existe"); // 409
     }  
   }catch(error){
-    res.status(500).send("Error al crear Conejo."); //500
+    res.status(500).send("Error al crear usuario con su animal."); //500
   }  
   
 });
@@ -466,24 +471,32 @@ app.delete("/conejos/:id", async(req,res) =>{
 
 
 
+//------------ Relaciones entre Tablas -----------------//
+/*
+usuarioConPeluche =  async(req,res)=>{
 
+    const result = await Usr.aggregate(
+        [
+            {
+                $lookup:
+                    {
+                        from:"Usr",
+                        localField:"Pelu",
+                        foreignField : "_id",
+                        as : "usuarioPeluche"
+                    
+                    } 
 
+            },{
+                "$unwind":"usuarioPeluche"
+            } 
+        ]
+    )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    console.log(result)
+;    
+}
+*/
 
 
 

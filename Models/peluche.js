@@ -7,7 +7,7 @@ const pelucheSchema = new Schema({
 		required:true,
 		
 	},
-	nombre:{
+	name:{
 		type: String,
 		required:true,
         index: {unique: true, dropDups: true}
