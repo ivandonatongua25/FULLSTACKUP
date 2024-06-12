@@ -17,7 +17,7 @@ const pelucheSchema = new Schema({
 		required:true
 	},
 	accesorio:{
-		type: Boolean,
+		type: String,
 		required:true
 	},
 	

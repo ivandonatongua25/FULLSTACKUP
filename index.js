@@ -108,6 +108,9 @@ const MailController = require('./Controllers/mail');
 const PeluController = require('./Controllers/peluche');
 /***Controladores de Conejo */
 const ConeController = require('./Controllers/conejo');
+const { type } = require("express/lib/response");
+const { count } = require("console");
+const Cone = require("./Models/conejo");
 
 
 
@@ -362,15 +365,15 @@ app.delete("/peluches/:id", async(req,res) =>{
 
 
 
-///Las rutas del conejo
+///Las rutas del Usuario con Peluche
 
-// Get Info de un Conejo
-
-
+// Get Info de un Usuario Con peluche
 
 
 
-// Get de todos los Conejos
+
+
+// Get de todos usuarios con peluche
 
 app.get("/conejos",/*Middleware.verify,*/async (req,res) =>{
 
@@ -463,6 +466,35 @@ app.delete("/conejos/:id", async(req,res) =>{
   }catch(error){
     res.status(500).send("Error algo salio mal")
   }
+});
+
+app.get('/ranking/',async(req,res) => {
+  try {
+    const ranking = await Cone.aggregate([
+      {$group : { _id :{
+                            type: "$type",
+                            color : "$color",
+                        },
+                  count :{$sum :1}
+                },
+                  $sort :{count:-1},
+      }
+    ]);
+  
+  const transformarRanking = rankings.map(i => ({
+    type: i._id.type,
+    color : i._id.color,
+    count : i.count
+
+  }));
+
+    return res.status(200).json(transformarRanking);
+  }catch(e) {
+    console.log(e.message);
+    return res.status(500).json({error: e.message});
+
+  }
+
 });
 
 //MailController.sendMail();
