@@ -28,6 +28,7 @@ const conejoSchema = new Schema({
 		required:true,
 		
 	},
+	
 
 }, { timestamps: true } ).set('toJSON',{
     transform: (document, object) => {

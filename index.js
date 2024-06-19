@@ -400,6 +400,7 @@ app.post("/conejos",async (req,res) =>{
   let imgAnimal = req.body.imgAnimal;
   let imgAccesorio = req.body.imgAccesorio;
   let color = req.body.color;
+  
   try{
     const result = await ConeController.addConejo(email,nombreAnimal,imgAnimal,imgAccesorio,color);
     if(result){
