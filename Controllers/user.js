@@ -8,12 +8,12 @@ const addUser = async (name,lastname,email,isActive,password) => {
     let existUser = await Usr.findOne({ email: email });
     console.log(existUser);
     if(!existUser) {
-
+/*
         const cryptoPass = require('crypto')
         .createHash('sha256')
         .update(password)
         .digest('hex');
-        
+ */       
         const usr = new Usr(
             {              
                 name: name,
